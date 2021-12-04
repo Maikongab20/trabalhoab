@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#corpo{
+    width: 100vw;
+    height: 15vh;
+    background: linear-gradient(180deg, rgba(84, 167, 208, 0.6) 99.99%, rgba(84, 167, 208, 0) 100%), linear-gradient(180deg, #8257E5 0%, rgba(130, 87, 229, 0) 100%);
+}
+.logo{
+    width: 210px;
+    height: 15vh;
+    float: left;
+}
+.menu {
+    width: 60vw;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}
+.menu lu{
+    width: 20vw;
+    height: 28px;
+}
+
+.menu ul li{
+    display: inline-block;
+    margin: 10px;
+    padding: 5px;
+    width:127px;
+    height:26px;
+    text-align: initial;
+    bottom:50px;
+    background-color: #fff;
+    text-align: center;
+
+}
+
+.menu a{
+    color: #000000;
+    text-decoration: none;
+}
+.credenciais ul {
+    height: 28px;
+    margin-left: 100px;
+}
+.credenciais li{
+    display: inline-block;
+    margin: 10px;
+    padding: 5px;
+    width:127px;
+    height:26px;
+    text-align: end;
+    
+}
+.credenciais img{
+    width: 15px;
+    height: 15px;
+
+}
+body{
+    background-color: #e9f8ff;
+    
+}
+footer{
+    width: 100vw;
+    height: 15vh;
+    text-align: center;
+    background-color:#b5E6FF ;
+    background: linear-gradient(180deg, rgba(84, 167, 208, 0.6) 99.99%, rgba(84, 167, 208, 0) 100%), linear-gradient(180deg, #8257E5 0%, rgba(130, 87, 229, 0) 100%);
+}
+footer p{
+    text-align: center;
+    font-size: 20px;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+ footer a{
+    text-decoration: none;
+    display: inline-block;
+    margin: 20px;
+    
+}
