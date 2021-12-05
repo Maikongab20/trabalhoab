@@ -50,6 +50,10 @@ class Produtos():
         sql = sql.replace("#foto",self.__foto)
         return self.__banco.executarInsertUpdateDelete(sql)
 
+    def procurarID(self):
+        sql = "select id from Anuncio while titlo = #titulo"
+        return self.__banco.executarSelect(sql)
+
     def excluir(self):
 
         sql = "delete from Anuncio where id = #id"
@@ -57,5 +61,14 @@ class Produtos():
         return self.__banco.executarSelect(sql)
 
     def obterProdutos(self):
-        sql = "select tipo_id,titulo,valor,descricao,contato from Anuncio order by name "
+        sql = "select id,tipo_id,titulo,valor,descricao,contato from Anuncio order by name "
         return self.__banco.executarSelect(sql)
+
+    def obterNome(self):
+        sql = "select titulo from Anuncio where #titulo"
+        return self.__banco.executarSelect(sql)
+
+    def procurarID(self):
+        sql = "select id from Anuncio while titlo = #titulo"
+        return self.__banco.executarSelect(sql)
+    

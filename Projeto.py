@@ -1,6 +1,6 @@
 import cherrypy
 import os
-
+# eu fiz o cadastro de produtos mas nao consegui fazer a tabela e excluir nao esta terminado nao sei o que estou fazendo de errado o site foi eu que terminei. maikon e andre
 from pageTipo import PaginaTipo
 #from pageEquipe import PaginaEquipe
 from createItem import CadastroProdutos

@@ -12,29 +12,29 @@ class CadastroProdutos():
     def index(self):
         return self.montaFormulario()
 
-    def montaFormulario(self):
+    def montaFormulario(self,titulo="",tipo=0,valor=0,descricao=""):
         
         html = self.topo
         html += '''<form name="formCadastro" action="Cadastrar" method="post">
                        <p>
                            <label><b>Titulo do Produto:</b></label><br />
-                           <input type="text" id="txtTitulo" name="txtTitulo" value="" size="50" maxlength="50" required /><br />
+                           <input type="text" id="txtTitulo" name="txtTitulo" value="%s" size="50" maxlength="50" required /><br />
                            <label><b>Tipo do Produto:</b></label><br/>'''
 
         html += self.comboTipos()
         html += '''        
-                           <br /><input type ="file" name = "img" id = "img" value = ""/><br />
+                           <br /><input type ="file" name = "img" id = "img" value = "%s"/><br />
                            <label><b>Preco do Produto:</b></label><br />
-                           <input type = "text" value="" id = "valor" name = "valor" " required/>
+                           <input type = "text" value="%s" id = "valor" name = "valor" " required/>
                            <br /><label><b>Email:</b></label><br />
-                           <input type = "email" placeholder = " exmplo@gmail.com" nome ="email" id ="email" value = "exemplo@gmail.com" />
+                           <input type = "email" placeholder = " exmplo@gmail.com" nome ="email" id ="email" value = "%s" />
                            <label><br /><b>Descricao:</b></label><br />
-                           <textarea id="txtDescricao" name="txtDescricao" cols="50" rows="5" placeholder ="..."></textarea><br />
+                           <textarea id="txtDescricao" name="txtDescricao" value = "%s" cols="50" rows="5" placeholder ="..."></textarea><br />
                            <input type="submit" id = "btnGravar" name = "btnGravar" value = "Gravar"/> 
                        </p>
-                   </form> '''
+                   </form> '''%(titulo,tipo,valor,descricao)
 
-        html += self.montarTabela()
+       # html += self.montaTabela()
         return html
 
     def comboTipos(self):
@@ -47,7 +47,7 @@ class CadastroProdutos():
         return html
     
     @cherrypy.expose()
-    def Cadastrar(self,txtTitulo,txtTipo,img,valor,email = '',txtDescricao = '',btnGravar = ''):
+    def Cadastrar(self,txtTitulo,txtTipo,img,valor,email,txtDescricao ,btnGravar ):
         if len(txtTitulo) > 0:
             pro = Produtos()
             pro.set_titulo(txtTitulo)
@@ -58,34 +58,48 @@ class CadastroProdutos():
             pro.set_descricao(txtDescricao)
             pro.Gravar()
             raise cherrypy.HTTPRedirect("/createItem")
-
-    def montarTabela(self):
-
-        html = '''
-                <tabela = "alinha">
-                <tr>
-                    <th>id</th>
-                    <th>id_tipo</th>
-                    <th>titulo</th>
-                    <th>valor</th>
-                    <th>descricao</th>
-                    <th>contato</th>
-                </tr>
-        
+            return '''
+                    <script>
+                        alert("produto cadastrado")
+                    </script>
+            '''
+    
+    def montaTabela(self):
+        html = '''<table class="alinha">
+                    <tr>
+                        <th>ID</th>
+                        <th>id tipo</th>
+                        <th>produto</th>
+                        <th>valor</th>
+                        <th>descricao</th>
+                        <th>contato</th>
+                    </tr>
         '''
-        pro = Produtos()
-        dados = pro.obterProdutos()
+        objTipo = Produtos()
+        dados = objTipo.obterProdutos()
         for tp in dados:
-            html += "<tr>"\
+            html += "<tr>" \
                         "<td>%s</td>"\
                         "<td>%s</td>"\
                         "<td>%s</td>"\
                         "<td>%s</td>"\
                         "<td>%s</td>"\
                         "<td>%s</td>"\
-                        "<td>%s</td>"\
-                        "<td style='text-align:center'>[<a href='alterarAnuncio?id=%s'>Alterar</a>] " \
-                            "[<a href='excluirProduto?idAnuncio=%s'>Excluir</a>]" \
-                    "</tr> \n" % (tp["id"], tp["id_tipo"], tp["titulo"], tp["valor"], tp["descricao"], tp["contato"])
+                        "<td style='text-align:center'>[<a href='alterarProduto?id=%s'>Alterar</a>] " \
+                            "[<a href='excluirProduto?id=%s'>Excluir</a>]" \
+                    "</tr> \n" % (tp["id"], tp["tipo_id"], tp["titulo"], tp["valor"], tp["descricao"], tp["contato"])
 
-            html += "</tabela><br />"
+        html += "</table><br/>"
+        return html
+    
+    
+    def alterarProduto(self,txtTitulo):
+        pro = Produtos()
+        dados = pro.set_titulo(txtTitulo)
+        return self.montaFormulario(dados[0]["id"],dados[0]["tipo_id"],dados[0]["titulo"], dados[0]["valor"], dados[0]["descricao"], dados[0]["contato"])
+
+
+    def excluirProduto(self,txtTitulo):
+        pro = Produtos()
+        dados = pro.procurarID(txtTitulo)
+        dados = pro.excluir(dados)
